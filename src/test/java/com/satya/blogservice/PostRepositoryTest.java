@@ -23,7 +23,7 @@ public class PostRepositoryTest {
 
     private Post[] todos;
 
-    @Before
+//    @Before
     public void setup() {
         Post todo1 = Post.builder().title("First task").build();
         Post todo2 = Post.builder().title("First task").build();
@@ -47,4 +47,30 @@ public class PostRepositoryTest {
 //        Assert.assertEquals(5, actualTodos.size());
         Assert.assertEquals(todos[todos.length - 1].getTitle(), actualTodos.get(4).getTitle());
     }
+
+    @Test
+    public void when_save_post_with_comment_then_save() {
+
+        Post post = new Post("First post");
+
+        post.getComments().add(
+                new Comment("My first review")
+        );
+        post.getComments().add(
+                new Comment("My second review")
+        );
+        post.getComments().add(
+                new Comment("My third review")
+        );
+
+        testEntityManager.persist(post);
+//        todoRepository.save(post);
+
+        List<Post> posts = todoRepository.findAll();
+
+        Assert.assertEquals(3, posts.get(0).getComments().size());
+
+    }
+
+
 }

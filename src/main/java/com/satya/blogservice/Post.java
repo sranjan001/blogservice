@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,5 +23,17 @@ public class Post {
 
     @Column(name = "title")
     private String title;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JoinColumn(name = "post_id")
+    private List<Comment> comments = new ArrayList<>();
+
+    public Post(String title)
+    {
+        this.title = title;
+    }
 
 }
